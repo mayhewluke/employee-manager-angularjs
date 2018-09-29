@@ -1,6 +1,6 @@
 module.exports = {
   preset: "ts-jest",
-  testMatch: ["<rootDir>/test/**/*.(j|t)s?(x)"],
+  testMatch: ["<rootDir>/test/**/*.(j|t)s?(x)", "<rootDir>/src/**/*.test.(j|t)s?(x)"],
   testEnvironment: "jsdom",
   moduleNameMapper: {
     "^secrets/(.*)": "<rootDir>/secrets/$1",
