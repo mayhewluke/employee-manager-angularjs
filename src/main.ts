@@ -1,3 +1,5 @@
-import "./styles.css";
+import angular from "angular";
 
-document.body.innerHTML = "<h1>Hello world!</h1>";
+import { rootModule } from "root";
+
+angular.bootstrap(document, [rootModule]);

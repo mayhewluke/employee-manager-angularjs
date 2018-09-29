@@ -41,7 +41,10 @@ const config: webpack.Configuration = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
-  plugins: [new CheckerPlugin(), new HtmlWebpackPlugin()],
+  plugins: [
+    new CheckerPlugin(),
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+  ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     plugins: [new TsconfigPathsPlugin()],
