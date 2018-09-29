@@ -1,6 +1,7 @@
 import { CheckerPlugin } from "awesome-typescript-loader";
 import HtmlWebpackPlugin from "html-webpack-plugin"; // tslint:disable-line:import-name
 import path from "path";
+import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import webpack from "webpack";
 
 const config: webpack.Configuration = {
@@ -43,6 +44,7 @@ const config: webpack.Configuration = {
   plugins: [new CheckerPlugin(), new HtmlWebpackPlugin()],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    plugins: [new TsconfigPathsPlugin()],
   },
 };
 
