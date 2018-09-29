@@ -1,3 +1,6 @@
 import angular from "angular";
 
-export const componentsModule = angular.module("app.components", []).name;
+import { authModule } from "./auth";
+
+export const componentsModule = angular.module("app.components", [authModule])
+  .name;
