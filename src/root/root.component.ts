@@ -3,7 +3,7 @@ import angular, { IComponentOptions } from "angular";
 const config: IComponentOptions = {
   template: `
     <h1>Hello world!</h1>
-    <login></login>
+    <ui-view></ui-view>
   `,
 };
 

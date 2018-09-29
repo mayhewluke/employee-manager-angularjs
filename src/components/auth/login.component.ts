@@ -1,3 +1,4 @@
+import { default as uiRouterModule, StateProvider } from "@uirouter/angularjs";
 import angular, { IComponentOptions } from "angular";
 
 import { logIn } from "./auth.service";
@@ -34,7 +35,14 @@ const config: IComponentOptions = {
   `,
 };
 
-const name = angular.module("loginComponent", []).component("login", config)
-  .name;
+const name = angular
+  .module("loginComponent", [uiRouterModule])
+  .component("login", config)
+  .config(($stateProvider: StateProvider) => {
+    $stateProvider.state("login", {
+      component: "login",
+      url: "/login",
+    });
+  }).name;
 
 export default name;

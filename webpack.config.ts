@@ -5,6 +5,9 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import webpack from "webpack";
 
 const config: webpack.Configuration = {
+  devServer: {
+    historyApiFallback: true,
+  },
   devtool: "eval-source-map",
   entry: "./src/main.ts",
   module: {
