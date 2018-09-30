@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`employee listComponent when data has not yet loaded shows a loading message 1`] = `"<p class=\\"loading ng-scope\\" ng-if=\\"$ctrl.isLoading\\">Loading...</p>"`;
+
+exports[`employee listComponent when employees are fetched lists the employees 1`] = `
+"
+    <h2>Employees</h2>
+    <!-- ngIf: $ctrl.isLoading -->
+    <!-- ngIf: $ctrl.hasError -->
+    <!-- ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-binding ng-scope\\">
+      Taylor
+    </div><!-- end ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-binding ng-scope\\">
+      Casey
+    </div><!-- end ngRepeat: (uid, employee) in $ctrl.employees -->
+  "
+`;
+
+exports[`employee listComponent when fetching employees fails shows an error message 1`] = `"<p class=\\"error ng-scope\\" ng-if=\\"$ctrl.hasError\\">Something went wrong!</p>"`;
