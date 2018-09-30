@@ -3,6 +3,7 @@ jest.mock("components/employee/employee.service");
 import angular, { ICompileService, IQService } from "angular";
 import "angular-mocks";
 
+import { authModule } from "components/auth";
 import { fetchEmployees } from "components/employee";
 
 import listComponent from "./list.component";
@@ -16,7 +17,7 @@ describe("employee listComponent", () => {
     uid2: { employeeName: "Casey", phone: "123-456-7890", shift: "Friday" },
   };
 
-  beforeEach(angular.mock.module(listComponent));
+  beforeEach(angular.mock.module(listComponent, authModule));
   beforeEach(
     angular.mock.inject(
       // tslint:disable-next-line:variable-name
@@ -31,6 +32,20 @@ describe("employee listComponent", () => {
         (fetchEmployees as any).mockImplementation(() => $q(() => null));
       },
     ),
+  );
+
+  it(
+    "requires authentication",
+    angular.mock.inject(($state, $rootScope, AuthService) => {
+      jest
+        .spyOn(AuthService, "isAuthenticated")
+        .mockImplementation(() => false);
+
+      $state.go("employees");
+      $rootScope.$apply();
+
+      expect($state.current.name).not.toEqual("employees");
+    }),
   );
 
   describe("when data has not yet loaded", () => {

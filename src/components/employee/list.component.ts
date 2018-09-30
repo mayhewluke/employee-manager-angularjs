@@ -45,6 +45,9 @@ const name = angular
   .config(($stateProvider: StateProvider) => {
     $stateProvider.state("employees", {
       component: "employees",
+      data: {
+        requireAuth: true,
+      },
       url: "/employees",
     });
   }).name;
