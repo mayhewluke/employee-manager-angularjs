@@ -1,8 +1,10 @@
 jest.mock("firebase");
 
+import angular, { IScope } from "angular";
+import "angular-mocks";
 import firebase from "firebase";
 
-import { logIn } from "./auth.service";
+import { AuthService, authServiceModule } from "./auth.service";
 
 describe("auth service", () => {
   describe("logIn", () => {
@@ -14,14 +16,23 @@ describe("auth service", () => {
       createUserWithEmailAndPassword: mockCreate,
       signInWithEmailAndPassword: mockSignIn,
     };
-    beforeEach(() => {
-      (firebase.auth as any).mockImplementation(() => authReturn);
-    });
+    let scope: IScope;
+    let auth: AuthService;
+    beforeEach(angular.mock.module(authServiceModule));
+    beforeEach(
+      // tslint:disable-next-line:variable-name
+      angular.mock.inject(($rootScope, _AuthService_: AuthService) => {
+        scope = $rootScope;
+        auth = _AuthService_;
+        (firebase.auth as any).mockImplementation(() => authReturn);
+      }),
+    );
 
     it("tries to log in to firebase with the email and password", async () => {
       mockSignIn.mockImplementation(() => Promise.resolve());
 
-      await logIn(email, password);
+      process.nextTick(() => scope.$apply());
+      await auth.logIn(email, password);
 
       expect(mockSignIn).toHaveBeenCalledTimes(1);
       expect(mockSignIn).toHaveBeenCalledWith(email, password);
@@ -34,7 +45,10 @@ describe("auth service", () => {
       });
 
       it("resolves the promise with the firebase response", async () => {
-        await expect(logIn(email, password)).resolves.toEqual(loginResponse);
+        process.nextTick(() => scope.$apply());
+        await expect(auth.logIn(email, password)).resolves.toEqual(
+          loginResponse,
+        );
       });
     });
 
@@ -44,7 +58,8 @@ describe("auth service", () => {
       });
 
       it("tries to create a user with the email and password", async () => {
-        await logIn(email, password);
+        process.nextTick(() => scope.$apply());
+        await auth.logIn(email, password);
 
         expect(mockCreate).toHaveBeenCalledTimes(1);
         expect(mockCreate).toHaveBeenCalledWith(email, password);
@@ -57,7 +72,10 @@ describe("auth service", () => {
         });
 
         it("resolves the promise with the firebase response", async () => {
-          await expect(logIn(email, password)).resolves.toEqual(createResponse);
+          process.nextTick(() => scope.$apply());
+          await expect(auth.logIn(email, password)).resolves.toEqual(
+            createResponse,
+          );
         });
       });
 
@@ -68,7 +86,8 @@ describe("auth service", () => {
         });
 
         it("rejects the promise with the firebase response", async () => {
-          await expect(logIn(email, password)).rejects.toEqual(error);
+          process.nextTick(() => scope.$apply());
+          await expect(auth.logIn(email, password)).rejects.toEqual(error);
         });
       });
     });

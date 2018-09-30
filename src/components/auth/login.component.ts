@@ -1,7 +1,7 @@
 import { default as uiRouterModule, StateProvider } from "@uirouter/angularjs";
 import angular, { IComponentOptions } from "angular";
 
-import { logIn } from "./auth.service";
+import { AuthService } from "./auth.service";
 
 const config: IComponentOptions = {
   bindings: {
@@ -13,8 +13,11 @@ const config: IComponentOptions = {
     public password!: string;
     public hasError: boolean = false;
 
+    // tslint:disable-next-line:no-shadowed-variable
+    public constructor(private AuthService: AuthService) {}
+
     public submit(email: string, password: string) {
-      logIn(email, password)
+      this.AuthService.logIn(email, password)
         .then(() => {
           this.hasError = false;
         })
