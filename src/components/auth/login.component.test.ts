@@ -1,3 +1,4 @@
+import { StateService } from "@uirouter/angularjs";
 import angular, { ICompileService, IQService } from "angular";
 import "angular-mocks";
 
@@ -98,6 +99,27 @@ describe("loginComponent", () => {
 
           expect(element.find(".error").length).toBe(0);
         });
+      });
+    });
+
+    describe("when logging in succeeds", () => {
+      let element: JQLite;
+      let state: StateService;
+      beforeEach(
+        angular.mock.inject($state => {
+          state = $state;
+          jest.spyOn(state, "go");
+          (auth.logIn as any).mockImplementation(() => $q.resolve());
+          element = render();
+
+          element.find("form").triggerHandler("submit");
+          scope.$digest();
+        }),
+      );
+
+      it("redirects to the employees component", () => {
+        expect(state.go).toHaveBeenCalledTimes(1);
+        expect(state.go).toHaveBeenCalledWith("employees");
       });
     });
   });

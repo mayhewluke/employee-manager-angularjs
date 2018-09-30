@@ -1,4 +1,8 @@
-import { default as uiRouterModule, StateProvider } from "@uirouter/angularjs";
+import {
+  default as uiRouterModule,
+  StateProvider,
+  StateService,
+} from "@uirouter/angularjs";
 import angular, { IComponentOptions } from "angular";
 
 import { AuthService } from "./auth.service";
@@ -13,13 +17,16 @@ const config: IComponentOptions = {
     public password!: string;
     public hasError: boolean = false;
 
-    // tslint:disable-next-line:no-shadowed-variable
-    public constructor(private AuthService: AuthService) {}
+    public constructor(
+      private $state: StateService,
+      private AuthService: AuthService, // tslint:disable-line:no-shadowed-variable
+    ) {}
 
     public submit(email: string, password: string) {
       this.AuthService.logIn(email, password)
         .then(() => {
           this.hasError = false;
+          this.$state.go("employees");
         })
         .catch(() => {
           this.hasError = true;
