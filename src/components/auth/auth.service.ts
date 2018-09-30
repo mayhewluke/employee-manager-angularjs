@@ -5,6 +5,10 @@ import firebase from "firebase";
 export class AuthService {
   constructor(private $q: ng.IQService) {}
 
+  public isAuthenticated() {
+    return firebase.auth().currentUser !== null;
+  }
+
   public logIn(
     email: string,
     password: string,

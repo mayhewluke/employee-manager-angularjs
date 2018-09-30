@@ -7,6 +7,15 @@ import firebase from "firebase";
 import { AuthService, authServiceModule } from "./auth.service";
 
 describe("auth service", () => {
+  let auth: AuthService;
+  beforeEach(angular.mock.module(authServiceModule));
+  beforeEach(
+    // tslint:disable-next-line:variable-name
+    angular.mock.inject((_AuthService_: AuthService) => {
+      auth = _AuthService_;
+    }),
+  );
+
   describe("logIn", () => {
     const email = "user@example.com";
     const password = "somethingsecret";
@@ -17,13 +26,9 @@ describe("auth service", () => {
       signInWithEmailAndPassword: mockSignIn,
     };
     let scope: IScope;
-    let auth: AuthService;
-    beforeEach(angular.mock.module(authServiceModule));
     beforeEach(
-      // tslint:disable-next-line:variable-name
-      angular.mock.inject(($rootScope, _AuthService_: AuthService) => {
+      angular.mock.inject(($rootScope: IScope) => {
         scope = $rootScope;
-        auth = _AuthService_;
         (firebase.auth as any).mockImplementation(() => authReturn);
       }),
     );
@@ -90,6 +95,20 @@ describe("auth service", () => {
           await expect(auth.logIn(email, password)).rejects.toEqual(error);
         });
       });
+    });
+  });
+
+  describe("isAuthenticated", () => {
+    it("returns true when logged in", () => {
+      (firebase.auth as any).mockImplementation(() => ({ currentUser: {} }));
+
+      expect(auth.isAuthenticated()).toBe(true);
+    });
+
+    it("returns true when not logged in", () => {
+      (firebase.auth as any).mockImplementation(() => ({ currentUser: null }));
+
+      expect(auth.isAuthenticated()).toBe(false);
     });
   });
 });
