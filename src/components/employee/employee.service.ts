@@ -46,6 +46,21 @@ export class EmployeeService {
         .then(x => resolve(x), e => reject(e)),
     );
   }
+
+  public save(uid: string, employee: Employee) {
+    const { currentUser } = firebase.auth();
+    if (currentUser === null) {
+      this.$state.go("login");
+      return this.$q.reject();
+    }
+    const ref = `/users/${currentUser.uid}/employees/${uid}`;
+    return this.$q.resolve(
+      firebase
+        .database()
+        .ref(ref)
+        .set(employee),
+    );
+  }
 }
 
 export const employeeServiceModule = angular

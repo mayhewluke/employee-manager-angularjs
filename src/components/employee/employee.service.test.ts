@@ -232,4 +232,91 @@ describe("employee service", () => {
       });
     });
   });
+
+  describe("save", () => {
+    const employee: Employee = {
+      employeeName: "Taylor",
+      phone: "555-555-5555",
+      shift: ShiftDay.Monday,
+    };
+    const uid: string = "employeeUid";
+    const mockRef = jest.fn();
+    const mockSet = jest.fn();
+    const user = { uid: "userUid" };
+    const doSave = () => service.save(uid, employee);
+    beforeEach(() => {
+      (firebase.database as any).mockImplementation(() => ({ ref: mockRef }));
+      mockRef.mockImplementation(() => ({ set: mockSet }));
+    });
+
+    describe("when not logged in", () => {
+      beforeEach(() => {
+        (firebase.auth as any).mockImplementation(() => ({
+          currentUser: null,
+        }));
+      });
+
+      it("redirects to the login page", () => {
+        jest.spyOn(state, "go");
+
+        doSave();
+
+        expect(state.go).toHaveBeenCalledTimes(1);
+        expect(state.go).toHaveBeenCalledWith("login");
+      });
+
+      it("does not try to save the employee", () => {
+        process.nextTick(() => scope.$apply());
+        doSave();
+
+        expect(mockSet).not.toHaveBeenCalled();
+      });
+
+      it("rejects the promise with undefined", async () => {
+        process.nextTick(() => scope.$apply());
+        await expect(doSave()).rejects.toBeUndefined();
+      });
+    });
+
+    describe("when logged in", () => {
+      beforeEach(() => {
+        (firebase.auth as any).mockImplementation(() => ({
+          currentUser: user,
+        }));
+      });
+
+      it("saves the employee to firebase", () => {
+        const refPath = `/users/${user.uid}/employees/${uid}`;
+        mockSet.mockImplementation(() => $q.resolve());
+
+        doSave();
+
+        expect(mockRef).toHaveBeenCalledTimes(1);
+        expect(mockRef).toHaveBeenCalledWith(refPath);
+
+        expect(mockSet).toHaveBeenCalledTimes(1);
+        expect(mockSet).toHaveBeenCalledWith(employee);
+      });
+
+      describe("when saving succeeds", () => {
+        it("resolves with the response from firebase", async () => {
+          const response = "response";
+          mockSet.mockImplementation(() => Promise.resolve(response));
+
+          process.nextTick(() => scope.$apply());
+          await expect(doSave()).resolves.toEqual(response);
+        });
+      });
+
+      describe("when saving fails", () => {
+        it("rejects with the error from firebase", async () => {
+          const error = new Error("Error");
+          mockSet.mockImplementation(() => Promise.reject(error));
+
+          process.nextTick(() => scope.$apply());
+          await expect(doSave()).rejects.toEqual(error);
+        });
+      });
+    });
+  });
 });
