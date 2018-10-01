@@ -30,6 +30,7 @@ const config: IComponentOptions = {
   // TODO separate out template
   template: `
     <h2>Employees</h2>
+    <a ui-sref="createEmployee">Add an employee</a>
     <p class="loading" ng-if="$ctrl.isLoading">Loading...</p>
     <p class="error" ng-if="$ctrl.hasError">Something went wrong!</p>
     <div ng-repeat="(uid, employee) in $ctrl.employees">

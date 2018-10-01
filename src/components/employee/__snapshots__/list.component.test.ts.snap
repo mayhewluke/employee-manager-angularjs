@@ -5,6 +5,7 @@ exports[`employee listComponent when data has not yet loaded shows a loading mes
 exports[`employee listComponent when employees are fetched lists the employees 1`] = `
 "
     <h2>Employees</h2>
+    <a ui-sref=\\"createEmployee\\">Add an employee</a>
     <!-- ngIf: $ctrl.isLoading -->
     <!-- ngIf: $ctrl.hasError -->
     <!-- ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-scope\\">
