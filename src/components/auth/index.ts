@@ -11,7 +11,7 @@ import loginComponent from "./login.component";
 export const authModule = angular
   .module("app.components.auth", [authServiceModule, loginComponent])
   .config(
-    // tslint:disable-next-line:no-shadowed-variable
+    /* @ngInject */
     ($transitionsProvider: TransitionService) => {
       const requireAuthCriteria: HookMatchCriteria = {
         to: state => {

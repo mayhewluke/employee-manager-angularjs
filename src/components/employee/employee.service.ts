@@ -7,7 +7,7 @@ import "firebase/database";
 import { Employee } from "common/employeeTypes";
 
 export class EmployeeService {
-  // tslint:disable-next-line:no-shadowed-variable
+  /* @ngInject */
   constructor(private $q: IQService, private $state: StateService) {}
 
   public fetchEmployees(): IPromise<{ [uid: string]: Employee }> {

@@ -11,8 +11,8 @@ const config: IComponentOptions = {
     public isLoading: boolean = true;
     public hasError: boolean = false;
 
-    // tslint:disable-next-line:no-shadowed-variable
-    constructor(private EmployeeService: EmployeeService) {}
+    /* @ngInject */
+    constructor(private EmployeeService: EmployeeService) {} // tslint:disable-line:no-shadowed-variable
 
     // TODO use route resolve
     public $onInit() {
@@ -42,14 +42,17 @@ const config: IComponentOptions = {
 const name = angular
   .module("employeeListComponent", [uiRouterModule])
   .component("employees", config)
-  .config(($stateProvider: StateProvider) => {
-    $stateProvider.state("employees", {
-      component: "employees",
-      data: {
-        requireAuth: true,
-      },
-      url: "/employees",
-    });
-  }).name;
+  .config(
+    /* @ngInject */
+    ($stateProvider: StateProvider) => {
+      $stateProvider.state("employees", {
+        component: "employees",
+        data: {
+          requireAuth: true,
+        },
+        url: "/employees",
+      });
+    },
+  ).name;
 
 export default name;

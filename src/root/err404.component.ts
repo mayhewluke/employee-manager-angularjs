@@ -11,11 +11,14 @@ const config: IComponentOptions = {
 const name = angular
   .module("err404Component", [uiRouterModule])
   .component("err404", config)
-  .config(($stateProvider: StateProvider) => {
-    $stateProvider.state("404", {
-      component: "err404",
-      url: "/404",
-    });
-  }).name;
+  .config(
+    /* @ngInject */
+    ($stateProvider: StateProvider) => {
+      $stateProvider.state("404", {
+        component: "err404",
+        url: "/404",
+      });
+    },
+  ).name;
 
 export default name;

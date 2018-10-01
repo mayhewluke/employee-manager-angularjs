@@ -20,6 +20,7 @@ export const rootModule = angular
     initComponent,
   ])
   .config(
+    /* @ngInject */
     ($locationProvider: ILocationProvider, $urlServiceProvider: UrlService) => {
       $locationProvider.html5Mode(true);
       // If route doesn't exist, show 404 without changing the URL

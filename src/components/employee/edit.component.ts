@@ -22,6 +22,7 @@ const config: IComponentOptions = {
     public hasError: boolean = false;
     private transition!: Transition;
 
+    /* @ngInject */
     constructor(
       // tslint:disable-next-line:no-shadowed-variable
       private EmployeeService: EmployeeService,
@@ -68,15 +69,18 @@ const config: IComponentOptions = {
 const name = angular
   .module("editEmployeeComponent", [uiRouterModule])
   .component("editEmployee", config)
-  .config(($stateProvider: StateProvider) => {
-    $stateProvider.state("editEmployee", {
-      bindings: { transition: "$transition$" },
-      component: "editEmployee",
-      data: {
-        requireAuth: true,
-      },
-      url: "/employee/:employeeUid",
-    });
-  }).name;
+  .config(
+    /* @ngInject */
+    ($stateProvider: StateProvider) => {
+      $stateProvider.state("editEmployee", {
+        bindings: { transition: "$transition$" },
+        component: "editEmployee",
+        data: {
+          requireAuth: true,
+        },
+        url: "/employee/:employeeUid",
+      });
+    },
+  ).name;
 
 export default name;

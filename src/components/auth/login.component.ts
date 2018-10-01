@@ -17,6 +17,7 @@ const config: IComponentOptions = {
     public password!: string;
     public hasError: boolean = false;
 
+    /* @ngInject */
     public constructor(
       private $state: StateService,
       private AuthService: AuthService, // tslint:disable-line:no-shadowed-variable
@@ -48,11 +49,14 @@ const config: IComponentOptions = {
 const name = angular
   .module("loginComponent", [uiRouterModule])
   .component("login", config)
-  .config(($stateProvider: StateProvider) => {
-    $stateProvider.state("login", {
-      component: "login",
-      url: "/login",
-    });
-  }).name;
+  .config(
+    /* @ngInject */
+    ($stateProvider: StateProvider) => {
+      $stateProvider.state("login", {
+        component: "login",
+        url: "/login",
+      });
+    },
+  ).name;
 
 export default name;

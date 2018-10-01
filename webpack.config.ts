@@ -28,6 +28,7 @@ export default (_: any, argv: any) => {
                 babelCore: "@babel/core",
                 babelOptions: {
                   babelrc: false,
+                  plugins: ["angularjs-annotate"],
                   presets: [
                     [
                       "@babel/preset-env",

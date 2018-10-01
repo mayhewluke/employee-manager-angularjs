@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 export class AuthService {
+  /* @ngInject */
   constructor(private $q: ng.IQService) {}
 
   public isAuthenticated() {

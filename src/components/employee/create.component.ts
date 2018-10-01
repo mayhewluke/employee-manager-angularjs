@@ -18,6 +18,7 @@ const config: IComponentOptions = {
     };
     public hasError: boolean = false;
 
+    /* @ngInject */
     constructor(
       // tslint:disable-next-line:no-shadowed-variable
       private EmployeeService: EmployeeService,
@@ -49,14 +50,17 @@ const config: IComponentOptions = {
 const name = angular
   .module("createEmployeeComponent", [uiRouterModule])
   .component("createEmployee", config)
-  .config(($stateProvider: StateProvider) => {
-    $stateProvider.state("createEmployee", {
-      component: "createEmployee",
-      data: {
-        requireAuth: true,
-      },
-      url: "/employee/create",
-    });
-  }).name;
+  .config(
+    /* @ngInject */
+    ($stateProvider: StateProvider) => {
+      $stateProvider.state("createEmployee", {
+        component: "createEmployee",
+        data: {
+          requireAuth: true,
+        },
+        url: "/employee/create",
+      });
+    },
+  ).name;
 
 export default name;

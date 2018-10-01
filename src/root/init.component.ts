@@ -11,7 +11,9 @@ const config: IComponentOptions = {
   controller: class InitComponentController {
     private unsubscribe = (): void => undefined;
 
+    /* @ngInject */
     public constructor(private $state: StateService) {}
+
     public $onInit() {
       this.unsubscribe = firebase
         .auth()
@@ -31,11 +33,14 @@ const config: IComponentOptions = {
 const name = angular
   .module("initComponent", [uiRouterModule])
   .component("init", config)
-  .config(($stateProvider: StateProvider) => {
-    $stateProvider.state("init", {
-      component: "init",
-      url: "/",
-    });
-  }).name;
+  .config(
+    /* @ngInject */
+    ($stateProvider: StateProvider) => {
+      $stateProvider.state("init", {
+        component: "init",
+        url: "/",
+      });
+    },
+  ).name;
 
 export default name;
