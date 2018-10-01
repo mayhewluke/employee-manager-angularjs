@@ -22,6 +22,12 @@ export class EmployeeService {
       )
       .then(snapshot => snapshot.val());
   }
+
+  public fetch(uid: string) {
+    return this.fetchEmployees().then(
+      employees => (employees[uid] ? employees[uid] : this.$q.reject()),
+    );
+  }
 }
 
 export const employeeServiceModule = angular

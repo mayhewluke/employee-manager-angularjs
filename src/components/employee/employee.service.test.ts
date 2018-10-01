@@ -105,4 +105,44 @@ describe("employee service", () => {
       });
     });
   });
+
+  describe("fetch", () => {
+    describe("when the employee exists", () => {
+      it("pulls the employee with the uid from fetchEmployees", async () => {
+        const uid = "uid1";
+        const employee = {};
+        const employees = { [uid]: employee, foo: {} };
+        jest
+          .spyOn(service, "fetchEmployees")
+          .mockImplementation(() => $q.resolve(employees));
+
+        process.nextTick(() => scope.$apply());
+        await expect(service.fetch(uid)).resolves.toBe(employee);
+      });
+    });
+
+    describe("when the employee doesn't exist", () => {
+      it("rejects with undefined", async () => {
+        const employees = {};
+        jest
+          .spyOn(service, "fetchEmployees")
+          .mockImplementation(() => $q.resolve(employees));
+
+        process.nextTick(() => scope.$apply());
+        await expect(service.fetch("")).rejects.toBeUndefined();
+      });
+    });
+
+    describe("when fetchEmployee rejects", () => {
+      it("rejects with the same value", async () => {
+        const error = new Error("Error");
+        jest
+          .spyOn(service, "fetchEmployees")
+          .mockImplementation(() => $q.reject(error));
+
+        process.nextTick(() => scope.$apply());
+        await expect(service.fetch("")).rejects.toBe(error);
+      });
+    });
+  });
 });
