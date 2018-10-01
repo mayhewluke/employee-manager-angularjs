@@ -1,5 +1,3 @@
-jest.mock("./root.css", () => null); // Prevent jest from trying to read this import
-
 import { default as uiRouterModule, UrlService } from "@uirouter/angularjs";
 import angular from "angular";
 import "angular-mocks";

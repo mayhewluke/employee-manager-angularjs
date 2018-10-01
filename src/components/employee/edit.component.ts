@@ -55,15 +55,7 @@ const config: IComponentOptions = {
     };
   },
   // TODO separate out template
-  template: `
-    <h2>Edit {{ $ctrl.employee.employeeName }}</h2>
-    <form>
-      <employee-form employee="$ctrl.employee" on-update="$ctrl.onUpdate"></employee-form>
-      <button type="button" class="save" ng-click="$ctrl.save($ctrl.employeeUid, $ctrl.employee)">Save</button>
-      <button type="button" class="delete" ng-click="$ctrl.remove($ctrl.employeeUid)">Delete</button>
-      <p class="error" ng-if="$ctrl.hasError">Something went wrong!</p>
-    </form>
-  `,
+  template: require("./edit.component.html"),
 };
 
 const name = angular

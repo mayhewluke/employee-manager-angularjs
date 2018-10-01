@@ -1,3 +1,17 @@
 body {
-  background-color: papayawhip;
+  margin: 0px;
+  background-color: #222;
+}
+
+root {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.screen {
+  height: 100vh;
+  max-width: 600px;
+  width: 600px;
+  background-color: #fff;
 }

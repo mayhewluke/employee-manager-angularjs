@@ -1,0 +1,40 @@
+<div class="form-group">
+  <label for="name" class="col-xs-2">Name</label>
+  <div class="col-xs-10">
+    <input
+      name="name"
+      id="name"
+      class="form-control"
+      type="text"
+      placeholder="Taylor"
+      ng-model="$ctrl.employee.employeeName"
+      ng-change="$ctrl.onUpdate($ctrl.employee)"
+    />
+  </div>
+</div>
+<div class="form-group">
+  <label for="phone" class="col-xs-2">Phone</label>
+  <div class="col-xs-10">
+    <input name="phone"
+      id="phone"
+      class="form-control"
+      type="text"
+      placeholder="555-555-5555"
+      ng-model="$ctrl.employee.phone"
+      ng-change="$ctrl.onUpdate($ctrl.employee)"
+    />
+  </div>
+</div>
+<div class="form-group">
+  <label for="shift" class="col-xs-2">Shift</label>
+  <div class="col-xs-10">
+    <select name="shift"
+      id="shift"
+      class="form-control"
+      ng-model="$ctrl.employee.shift"
+      ng-options="value as humanized for (value, humanized) in $ctrl.options"
+      ng-change="$ctrl.onUpdate($ctrl.employee)"
+    >
+    </select>
+  </div>
+</div>

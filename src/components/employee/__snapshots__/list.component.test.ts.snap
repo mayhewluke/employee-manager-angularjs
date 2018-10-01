@@ -1,19 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`employee listComponent when data has not yet loaded shows a loading message 1`] = `"<p class=\\"loading ng-scope\\" ng-if=\\"$ctrl.isLoading\\">Loading...</p>"`;
+exports[`employee listComponent when data has not yet loaded shows a loading message 1`] = `
+"<div class=\\"loading row ng-scope\\" ng-if=\\"$ctrl.isLoading\\">
+    <div class=\\"col-xs-12 alert alert-info\\">Loading...</div>
+  </div>"
+`;
 
 exports[`employee listComponent when employees are fetched lists the employees 1`] = `
 "
-    <h2>Employees</h2>
-    <a ui-sref=\\"createEmployee\\">Add an employee</a>
-    <!-- ngIf: $ctrl.isLoading -->
-    <!-- ngIf: $ctrl.hasError -->
-    <!-- ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-scope\\">
+  <tbody><!-- ngRepeat: (uid, employee) in $ctrl.employees --><tr class=\\"employee-row ng-scope\\" ng-repeat=\\"(uid, employee) in $ctrl.employees\\">
+    <td>
       <a ui-sref=\\"editEmployee({ employeeUid: uid })\\" class=\\"ng-binding\\">Taylor</a>
-    </div><!-- end ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-scope\\">
+    </td>
+  </tr><!-- end ngRepeat: (uid, employee) in $ctrl.employees --><tr class=\\"employee-row ng-scope\\" ng-repeat=\\"(uid, employee) in $ctrl.employees\\">
+    <td>
       <a ui-sref=\\"editEmployee({ employeeUid: uid })\\" class=\\"ng-binding\\">Casey</a>
-    </div><!-- end ngRepeat: (uid, employee) in $ctrl.employees -->
-  "
+    </td>
+  </tr><!-- end ngRepeat: (uid, employee) in $ctrl.employees -->
+</tbody>"
 `;
 
-exports[`employee listComponent when fetching employees fails shows an error message 1`] = `"<p class=\\"error ng-scope\\" ng-if=\\"$ctrl.hasError\\">Something went wrong!</p>"`;
+exports[`employee listComponent when fetching employees fails shows an error message 1`] = `
+"<div class=\\"error row ng-scope\\" ng-if=\\"$ctrl.hasError\\">
+    <div class=\\"col-xs-12 alert alert-danger\\">Something went wrong!</div>
+  </div>"
+`;

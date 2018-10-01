@@ -7,6 +7,8 @@ import angular, { IComponentOptions } from "angular";
 
 import { AuthService } from "./auth.service";
 
+import "./login.component.css";
+
 const config: IComponentOptions = {
   bindings: {
     email: "<",
@@ -34,16 +36,8 @@ const config: IComponentOptions = {
         });
     }
   },
-  // TODO separate out template
   // TODO add spinner when request is in progress
-  template: `
-  <form ng-submit="$ctrl.submit($ctrl.email, $ctrl.password)">
-    <input name="email" type="text" ng-model="$ctrl.email" required>
-    <input name="password" type="password" ng-model="$ctrl.password" required>
-    <button type="submit">Log in</button>
-    <p ng-if="$ctrl.hasError" class="error">Something went wrong!</p>
-  </form>
-  `,
+  template: require("./login.component.html"),
 };
 
 const name = angular

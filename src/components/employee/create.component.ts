@@ -37,14 +37,7 @@ const config: IComponentOptions = {
     };
   },
   // TODO separate out template
-  template: `
-    <h2>Add an employee</h2>
-    <form ng-submit="$ctrl.create($ctrl.employee)">
-      <employee-form employee="$ctrl.employee" on-update="$ctrl.onUpdate"></employee-form>
-      <button type="submit">Create</button>
-      <p class="error" ng-if="$ctrl.hasError">Something went wrong!</p>
-    </form>
-  `,
+  template: require("./create.component.html"),
 };
 
 const name = angular

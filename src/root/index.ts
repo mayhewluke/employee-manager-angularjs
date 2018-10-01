@@ -9,6 +9,8 @@ import initComponent from "./init.component";
 import rootComponent from "./root.component";
 
 // TODO find a way to get TypeScript to ensure this path actually exists
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap-theme.min.css"; // tslint:disable-line:ordered-imports
 import "./root.css";
 
 export const rootModule = angular

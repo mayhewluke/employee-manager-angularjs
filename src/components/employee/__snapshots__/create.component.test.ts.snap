@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`employee create form when submitted when creation fails shows an error message 1`] = `"<p class=\\"error ng-scope\\" ng-if=\\"$ctrl.hasError\\">Something went wrong!</p>"`;
+exports[`employee create form when submitted when creation fails shows an error message 1`] = `"<p class=\\"error alert alert-danger ng-scope\\" ng-if=\\"$ctrl.hasError\\">Something went wrong!</p>"`;

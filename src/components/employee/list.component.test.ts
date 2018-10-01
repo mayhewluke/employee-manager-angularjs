@@ -87,7 +87,7 @@ describe("employee listComponent", () => {
     it("lists the employees", () => {
       const element = render();
 
-      expect(element.html()).toMatchSnapshot();
+      expect(element.find("table").html()).toMatchSnapshot();
     });
 
     it("does not display the loading message", () => {

@@ -1,0 +1,21 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <h2 class="pull-left">Employees</h2>
+    <a class="btn btn-primary navbar-btn pull-right" ui-sref="createEmployee">Add an employee</a>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="loading row" ng-if="$ctrl.isLoading">
+    <div class="col-xs-12 alert alert-info">Loading...</div>
+  </div>
+  <div class="error row" ng-if="$ctrl.hasError">
+    <div class="col-xs-12 alert alert-danger">Something went wrong!</div>
+  </div>
+</div>
+<table class="table table-striped">
+  <tr class="employee-row" ng-repeat="(uid, employee) in $ctrl.employees">
+    <td>
+      <a ui-sref="editEmployee({ employeeUid: uid })">{{ employee.employeeName }}</a>
+    </td>
+  </tr>
+</table>
