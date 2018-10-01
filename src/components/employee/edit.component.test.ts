@@ -157,4 +157,64 @@ describe("employee edit form", () => {
       });
     });
   });
+
+  describe("when the delete button is clicked", () => {
+    beforeEach(() => {
+      (firebase.auth as any).mockImplementation(() => ({ currentUser: user }));
+      jest.spyOn(service, "remove").mockImplementation(() => $q.resolve());
+      jest.spyOn(state, "go").mockImplementation(() => null);
+      goTo(`employee/${uid}`);
+    });
+
+    it("uses EmployeeService to remove the employee", () => {
+      const element = render();
+      element.find("button.delete").triggerHandler("click");
+
+      expect(service.remove).toHaveBeenCalledTimes(1);
+      expect(service.remove).toHaveBeenCalledWith(uid);
+    });
+
+    describe("when removal is successful", () => {
+      beforeEach(() => {
+        jest.spyOn(service, "remove").mockImplementation(() => $q.resolve());
+      });
+
+      it("redirects to the employee list", () => {
+        const element = render();
+
+        element.find("button.delete").triggerHandler("click");
+
+        expect(state.go).toHaveBeenCalledTimes(1);
+        expect(state.go).toHaveBeenCalledWith("employees");
+      });
+    });
+
+    describe("when removal fails", () => {
+      beforeEach(() => {
+        jest.spyOn(service, "remove").mockImplementation(() => $q.reject());
+      });
+
+      it("shows an error message", () => {
+        const element = render();
+
+        element.find("button.delete").triggerHandler("click");
+
+        expect(element.find(".error")[0].outerHTML).toMatchSnapshot();
+      });
+
+      describe("when resubmitted", () => {
+        it("clears the error message", () => {
+          const element = render();
+          element.find("button.delete").triggerHandler("click");
+
+          jest
+            .spyOn(service, "remove")
+            .mockImplementation(() => $q(() => null));
+          element.find("button.delete").triggerHandler("click");
+
+          expect(element.find(".error").length).toBe(0);
+        });
+      });
+    });
+  });
 });

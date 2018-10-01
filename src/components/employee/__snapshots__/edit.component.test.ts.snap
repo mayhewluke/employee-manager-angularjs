@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`employee edit form when the delete button is clicked when removal fails shows an error message 1`] = `"<p class=\\"error ng-scope\\" ng-if=\\"$ctrl.hasError\\">Something went wrong!</p>"`;
+
 exports[`employee edit form when the save button is clicked when saving fails shows an error message 1`] = `"<p class=\\"error ng-scope\\" ng-if=\\"$ctrl.hasError\\">Something went wrong!</p>"`;

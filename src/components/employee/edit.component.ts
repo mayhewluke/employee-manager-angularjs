@@ -42,6 +42,13 @@ const config: IComponentOptions = {
         .catch(_ => (this.hasError = true));
     }
 
+    public remove(uid: string) {
+      this.hasError = false;
+      this.EmployeeService.remove(uid)
+        .then(() => this.$state.go("employees"))
+        .catch(_ => (this.hasError = true));
+    }
+
     public onUpdate = (employee: Employee) => {
       this.employee = angular.copy(employee);
     };
@@ -52,6 +59,7 @@ const config: IComponentOptions = {
     <form>
       <employee-form employee="$ctrl.employee" on-update="$ctrl.onUpdate"></employee-form>
       <button type="button" class="save" ng-click="$ctrl.save($ctrl.employeeUid, $ctrl.employee)">Save</button>
+      <button type="button" class="delete" ng-click="$ctrl.remove($ctrl.employeeUid)">Delete</button>
       <p class="error" ng-if="$ctrl.hasError">Something went wrong!</p>
     </form>
   `,
