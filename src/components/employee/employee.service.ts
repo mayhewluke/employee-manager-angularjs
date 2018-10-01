@@ -61,6 +61,21 @@ export class EmployeeService {
         .set(employee),
     );
   }
+
+  public remove(uid: string) {
+    const { currentUser } = firebase.auth();
+    if (currentUser === null) {
+      this.$state.go("login");
+      return this.$q.reject();
+    }
+    const ref = `/users/${currentUser.uid}/employees/${uid}`;
+    return this.$q.resolve(
+      firebase
+        .database()
+        .ref(ref)
+        .remove(),
+    );
+  }
 }
 
 export const employeeServiceModule = angular

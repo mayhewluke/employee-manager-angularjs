@@ -319,4 +319,85 @@ describe("employee service", () => {
       });
     });
   });
+
+  describe("remove", () => {
+    const uid: string = "employeeUid";
+    const mockRef = jest.fn();
+    const mockRemove = jest.fn();
+    const user = { uid: "userUid" };
+    const doRemove = () => service.remove(uid);
+    beforeEach(() => {
+      (firebase.database as any).mockImplementation(() => ({ ref: mockRef }));
+      mockRef.mockImplementation(() => ({ remove: mockRemove }));
+    });
+
+    describe("when not logged in", () => {
+      beforeEach(() => {
+        (firebase.auth as any).mockImplementation(() => ({
+          currentUser: null,
+        }));
+      });
+
+      it("redirects to the login page", () => {
+        jest.spyOn(state, "go");
+
+        doRemove();
+
+        expect(state.go).toHaveBeenCalledTimes(1);
+        expect(state.go).toHaveBeenCalledWith("login");
+      });
+
+      it("does not try to remove the employee", () => {
+        process.nextTick(() => scope.$apply());
+        doRemove();
+
+        expect(mockRemove).not.toHaveBeenCalled();
+      });
+
+      it("rejects the promise with undefined", async () => {
+        process.nextTick(() => scope.$apply());
+        await expect(doRemove()).rejects.toBeUndefined();
+      });
+    });
+
+    describe("when logged in", () => {
+      beforeEach(() => {
+        (firebase.auth as any).mockImplementation(() => ({
+          currentUser: user,
+        }));
+      });
+
+      it("removes the employee from firebase", () => {
+        const refPath = `/users/${user.uid}/employees/${uid}`;
+        mockRemove.mockImplementation(() => $q.resolve());
+
+        doRemove();
+
+        expect(mockRef).toHaveBeenCalledTimes(1);
+        expect(mockRef).toHaveBeenCalledWith(refPath);
+
+        expect(mockRemove).toHaveBeenCalledTimes(1);
+      });
+
+      describe("when removal succeeds", () => {
+        it("resolves with the response from firebase", async () => {
+          const response = "response";
+          mockRemove.mockImplementation(() => Promise.resolve(response));
+
+          process.nextTick(() => scope.$apply());
+          await expect(doRemove()).resolves.toEqual(response);
+        });
+      });
+
+      describe("when removal fails", () => {
+        it("rejects with the error from firebase", async () => {
+          const error = new Error("Error");
+          mockRemove.mockImplementation(() => Promise.reject(error));
+
+          process.nextTick(() => scope.$apply());
+          await expect(doRemove()).rejects.toEqual(error);
+        });
+      });
+    });
+  });
 });
