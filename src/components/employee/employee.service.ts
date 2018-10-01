@@ -30,6 +30,22 @@ export class EmployeeService {
       employees => (employees[uid] ? employees[uid] : this.$q.reject()),
     );
   }
+
+  public create(employee: Employee) {
+    const { currentUser } = firebase.auth();
+    if (currentUser === null) {
+      this.$state.go("login");
+      return this.$q.reject();
+    }
+    const ref = `/users/${currentUser.uid}/employees`;
+    return this.$q((resolve, reject) =>
+      firebase
+        .database()
+        .ref(ref)
+        .push(employee)
+        .then(x => resolve(x), e => reject(e)),
+    );
+  }
 }
 
 export const employeeServiceModule = angular
