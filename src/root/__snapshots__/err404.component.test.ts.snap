@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`err404 component displays an error message 1`] = `"<h1 class=\\"error\\">Error 404: Not Found</h1>"`;

@@ -1,8 +1,10 @@
+import { UrlService } from "@uirouter/angularjs";
 import angular, { ILocationProvider } from "angular";
 
 import { commonModule } from "common";
 import { componentsModule } from "components";
 
+import err404Component from "./err404.component";
 import initComponent from "./init.component";
 import rootComponent from "./root.component";
 
@@ -10,7 +12,20 @@ import rootComponent from "./root.component";
 import "./root.css";
 
 export const rootModule = angular
-  .module("app", [componentsModule, commonModule, rootComponent, initComponent])
-  .config(($locationProvider: ILocationProvider) => {
-    $locationProvider.html5Mode(true);
-  }).name;
+  .module("app", [
+    componentsModule,
+    commonModule,
+    err404Component,
+    rootComponent,
+    initComponent,
+  ])
+  .config(
+    ($locationProvider: ILocationProvider, $urlServiceProvider: UrlService) => {
+      $locationProvider.html5Mode(true);
+      // If route doesn't exist, show 404 without changing the URL
+      $urlServiceProvider.rules.otherwise({
+        options: { location: false },
+        state: "404",
+      });
+    },
+  ).name;
