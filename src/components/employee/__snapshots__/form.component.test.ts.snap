@@ -3,13 +3,13 @@
 exports[`employee form component renders properly 1`] = `
 "
     <label>Name
-      <input name=\\"name\\" type=\\"text\\" placeholder=\\"Taylor\\" ng-model=\\"$ctrl.employee.employeeName\\" class=\\"ng-pristine ng-untouched ng-valid ng-empty\\">
+      <input name=\\"name\\" type=\\"text\\" placeholder=\\"Taylor\\" ng-model=\\"$ctrl.employee.employeeName\\" ng-change=\\"$ctrl.onUpdate($ctrl.employee)\\" class=\\"ng-pristine ng-untouched ng-valid ng-empty\\">
     </label>
     <label>Phone
-      <input name=\\"phone\\" type=\\"text\\" placeholder=\\"555-555-5555\\" ng-model=\\"$ctrl.employee.phone\\" class=\\"ng-pristine ng-untouched ng-valid ng-empty\\">
+      <input name=\\"phone\\" type=\\"text\\" placeholder=\\"555-555-5555\\" ng-model=\\"$ctrl.employee.phone\\" ng-change=\\"$ctrl.onUpdate($ctrl.employee)\\" class=\\"ng-pristine ng-untouched ng-valid ng-empty\\">
     </label>
     <label>Shift
-      <select name=\\"shift\\" ng-model=\\"$ctrl.employee.shift\\" ng-options=\\"value as humanized for (value, humanized) in $ctrl.options\\" class=\\"ng-pristine ng-untouched ng-valid ng-empty\\"><option value=\\"?\\" selected=\\"selected\\"></option><option value=\\"string:Monday\\">Monday</option><option value=\\"string:Tuesday\\">Tuesday</option><option value=\\"string:Wednesday\\">Wednesday</option><option value=\\"string:Thursday\\">Thursday</option><option value=\\"string:Friday\\">Friday</option><option value=\\"string:Saturday\\">Saturday</option><option value=\\"string:Sunday\\">Sunday</option></select>
+      <select name=\\"shift\\" ng-model=\\"$ctrl.employee.shift\\" ng-options=\\"value as humanized for (value, humanized) in $ctrl.options\\" ng-change=\\"$ctrl.onUpdate($ctrl.employee)\\" class=\\"ng-pristine ng-untouched ng-valid ng-empty\\"><option value=\\"?\\" selected=\\"selected\\"></option><option value=\\"string:Monday\\">Monday</option><option value=\\"string:Tuesday\\">Tuesday</option><option value=\\"string:Wednesday\\">Wednesday</option><option value=\\"string:Thursday\\">Thursday</option><option value=\\"string:Friday\\">Friday</option><option value=\\"string:Saturday\\">Saturday</option><option value=\\"string:Sunday\\">Sunday</option></select>
     </label>
   "
 `;

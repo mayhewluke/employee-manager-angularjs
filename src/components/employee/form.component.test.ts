@@ -7,6 +7,7 @@ import { authModule } from "components/auth";
 import formComponent from "./form.component";
 
 describe("employee form component", () => {
+  const onUpdate = jest.fn();
   let render: (employee?: Employee) => JQLite;
   let scope: any;
   const testEmployee: Employee = {
@@ -21,8 +22,9 @@ describe("employee form component", () => {
       scope = $rootScope.$new();
       render = employee => {
         scope.employee = employee;
+        scope.onUpdate = onUpdate;
         const ele = $compile(
-          `<employee-form employee="employee"></employee-form>`,
+          `<employee-form employee="employee" on-update="onUpdate"></employee-form>`,
         )(scope);
         scope.$digest();
         return ele;
@@ -47,24 +49,44 @@ describe("employee form component", () => {
     );
   });
 
-  it("doesn't affect the passed in employee", () => {
-    const orig = angular.copy(testEmployee);
-    const element = render(testEmployee);
+  describe("when changed", () => {
+    it("doesn't affect the passed in employee", () => {
+      const orig = angular.copy(testEmployee);
+      const element = render(testEmployee);
 
-    element
-      .find("input[name=name]")
-      .val("foo")
-      .triggerHandler("input");
-    element
-      .find("input[name=phone]")
-      .val("123-456-7890")
-      .triggerHandler("input");
-    // TODO this one does not work - figure out what handler needs to be used to make this update
-    element
-      .find("select[name=shift]")
-      .val("Friday")
-      .triggerHandler("input");
+      element
+        .find("input[name=name]")
+        .val("foo")
+        .triggerHandler("input");
+      element
+        .find("input[name=phone]")
+        .val("123-456-7890")
+        .triggerHandler("input");
+      // TODO this one does not work - figure out what handler needs to be used to make this update
+      element
+        .find("select[name=shift]")
+        .val("Friday")
+        .triggerHandler("input");
 
-    expect(testEmployee).toEqual(orig);
+      expect(testEmployee).toEqual(orig);
+    });
+
+    it("calls the onUpdate binding with the new employee state", () => {
+      const orig = {
+        employeeName: "Taylor",
+        phone: "555-5555",
+        shift: ShiftDay.Monday,
+      };
+      const expected = { ...orig, phone: "98754" };
+      const element = render(orig);
+
+      element
+        .find("input[name=phone]")
+        .val(expected.phone)
+        .triggerHandler("input");
+
+      expect(onUpdate).toHaveBeenCalledTimes(1);
+      expect(onUpdate).toHaveBeenCalledWith(expected);
+    });
   });
 });
