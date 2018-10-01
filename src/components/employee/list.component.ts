@@ -34,7 +34,7 @@ const config: IComponentOptions = {
     <p class="loading" ng-if="$ctrl.isLoading">Loading...</p>
     <p class="error" ng-if="$ctrl.hasError">Something went wrong!</p>
     <div ng-repeat="(uid, employee) in $ctrl.employees">
-      <a ui-sref="employee({ employeeUid: uid })">{{ employee.employeeName }}</a>
+      <a ui-sref="editEmployee({ employeeUid: uid })">{{ employee.employeeName }}</a>
     </div>
   `,
 };

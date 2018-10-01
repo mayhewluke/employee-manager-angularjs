@@ -9,9 +9,9 @@ exports[`employee listComponent when employees are fetched lists the employees 1
     <!-- ngIf: $ctrl.isLoading -->
     <!-- ngIf: $ctrl.hasError -->
     <!-- ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-scope\\">
-      <a ui-sref=\\"employee({ employeeUid: uid })\\" class=\\"ng-binding\\">Taylor</a>
+      <a ui-sref=\\"editEmployee({ employeeUid: uid })\\" class=\\"ng-binding\\">Taylor</a>
     </div><!-- end ngRepeat: (uid, employee) in $ctrl.employees --><div ng-repeat=\\"(uid, employee) in $ctrl.employees\\" class=\\"ng-scope\\">
-      <a ui-sref=\\"employee({ employeeUid: uid })\\" class=\\"ng-binding\\">Casey</a>
+      <a ui-sref=\\"editEmployee({ employeeUid: uid })\\" class=\\"ng-binding\\">Casey</a>
     </div><!-- end ngRepeat: (uid, employee) in $ctrl.employees -->
   "
 `;
