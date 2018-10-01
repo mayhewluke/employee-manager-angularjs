@@ -1,7 +1,7 @@
 import { default as uiRouterModule, StateProvider } from "@uirouter/angularjs";
 import angular, { IComponentOptions } from "angular";
 
-import { fetchEmployees } from "./employee.service";
+import { EmployeeService } from "./employee.service";
 
 interface Employee {
   employeeName: string;
@@ -15,10 +15,13 @@ const config: IComponentOptions = {
     public isLoading: boolean = true;
     public hasError: boolean = false;
 
+    // tslint:disable-next-line:no-shadowed-variable
+    constructor(private EmployeeService: EmployeeService) {}
+
     // TODO use route resolve
     public $onInit() {
       this.isLoading = true; // Don't rely on implicit state
-      fetchEmployees()
+      this.EmployeeService.fetchEmployees()
         .then(employees => {
           this.employees = employees;
         })

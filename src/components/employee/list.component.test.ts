@@ -1,10 +1,8 @@
-jest.mock("components/employee/employee.service");
-
 import angular, { ICompileService, IQService } from "angular";
 import "angular-mocks";
 
 import { authModule } from "components/auth";
-import { fetchEmployees } from "components/employee";
+import { EmployeeService, employeeServiceModule } from "components/employee";
 
 import listComponent from "./list.component";
 
@@ -12,16 +10,26 @@ describe("employee listComponent", () => {
   let render: (email?: string) => JQLite;
   let scope: any;
   let $q: IQService;
+  let service: EmployeeService;
   const employees = {
     uid1: { employeeName: "Taylor", phone: "555-5555", shift: "Monday" },
     uid2: { employeeName: "Casey", phone: "123-456-7890", shift: "Friday" },
   };
 
-  beforeEach(angular.mock.module(listComponent, authModule));
+  beforeEach(
+    angular.mock.module(listComponent, authModule, employeeServiceModule),
+  );
   beforeEach(
     angular.mock.inject(
-      // tslint:disable-next-line:variable-name
-      ($rootScope, $compile: ICompileService, _$q_: IQService) => {
+      // tslint:disable:variable-name
+      (
+        $rootScope,
+        $compile: ICompileService,
+        _$q_: IQService,
+        _EmployeeService_: EmployeeService,
+        // tslint:enable:variable-name
+      ) => {
+        service = _EmployeeService_;
         $q = _$q_;
         scope = $rootScope.$new();
         render = () => {
@@ -29,7 +37,9 @@ describe("employee listComponent", () => {
           scope.$digest();
           return ele;
         };
-        (fetchEmployees as any).mockImplementation(() => $q(() => null));
+        jest
+          .spyOn(service, "fetchEmployees")
+          .mockImplementation(() => $q(() => null));
       },
     ),
   );
@@ -64,7 +74,9 @@ describe("employee listComponent", () => {
 
   describe("when employees are fetched", () => {
     beforeEach(() => {
-      (fetchEmployees as any).mockImplementation(() => $q.resolve(employees));
+      (service.fetchEmployees as any).mockImplementation(() =>
+        $q.resolve(employees),
+      );
     });
 
     it("lists the employees", () => {
@@ -88,7 +100,7 @@ describe("employee listComponent", () => {
 
   describe("when fetching employees fails", () => {
     beforeEach(() => {
-      (fetchEmployees as any).mockImplementation(() => $q.reject());
+      (service.fetchEmployees as any).mockImplementation(() => $q.reject());
     });
 
     it("shows an error message", () => {
