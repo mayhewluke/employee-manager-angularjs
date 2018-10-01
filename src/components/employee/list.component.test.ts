@@ -1,6 +1,7 @@
 import angular, { ICompileService, IQService } from "angular";
 import "angular-mocks";
 
+import { Employee, ShiftDay } from "common/employeeTypes";
 import { authModule } from "components/auth";
 import { EmployeeService, employeeServiceModule } from "components/employee";
 
@@ -11,9 +12,13 @@ describe("employee listComponent", () => {
   let scope: any;
   let $q: IQService;
   let service: EmployeeService;
-  const employees = {
-    uid1: { employeeName: "Taylor", phone: "555-5555", shift: "Monday" },
-    uid2: { employeeName: "Casey", phone: "123-456-7890", shift: "Friday" },
+  const employees: { [uid: string]: Employee } = {
+    uid1: { employeeName: "Taylor", phone: "555-5555", shift: ShiftDay.Monday },
+    uid2: {
+      employeeName: "Casey",
+      phone: "123-456-7890",
+      shift: ShiftDay.Friday,
+    },
   };
 
   beforeEach(

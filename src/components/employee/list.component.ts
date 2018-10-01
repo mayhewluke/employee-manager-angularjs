@@ -1,13 +1,9 @@
 import { default as uiRouterModule, StateProvider } from "@uirouter/angularjs";
 import angular, { IComponentOptions } from "angular";
 
-import { EmployeeService } from "./employee.service";
+import { Employee } from "common/employeeTypes";
 
-interface Employee {
-  employeeName: string;
-  phone: string;
-  shift: string; // TODO use ShiftDay enum a la employee-manager-react-native
-}
+import { EmployeeService } from "./employee.service";
 
 const config: IComponentOptions = {
   controller: class EmployeeListController {

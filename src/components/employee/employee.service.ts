@@ -1,12 +1,14 @@
 import { default as uiRouterModule, StateService } from "@uirouter/angularjs";
-import angular, { IQService } from "angular";
+import angular, { IPromise, IQService } from "angular";
 import firebase from "firebase";
+
+import { Employee } from "common/employeeTypes";
 
 export class EmployeeService {
   // tslint:disable-next-line:no-shadowed-variable
   constructor(private $q: IQService, private $state: StateService) {}
 
-  public fetchEmployees() {
+  public fetchEmployees(): IPromise<{ [uid: string]: Employee }> {
     const { currentUser } = firebase.auth();
     if (currentUser === null) {
       this.$state.go("login");
@@ -23,7 +25,7 @@ export class EmployeeService {
       .then(snapshot => snapshot.val());
   }
 
-  public fetch(uid: string) {
+  public fetch(uid: string): IPromise<Employee> {
     return this.fetchEmployees().then(
       employees => (employees[uid] ? employees[uid] : this.$q.reject()),
     );

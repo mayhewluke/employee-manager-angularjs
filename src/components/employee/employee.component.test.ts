@@ -3,6 +3,7 @@ import angular, { ICompileService, ILocationService, IQService } from "angular";
 import "angular-mocks";
 import firebase from "firebase";
 
+import { Employee, ShiftDay } from "common/employeeTypes";
 import { authModule } from "components/auth";
 import { EmployeeService, employeeServiceModule } from "components/employee";
 
@@ -15,10 +16,10 @@ describe("employee view component", () => {
   let $q: IQService;
   let service: EmployeeService;
   let $location: ILocationService;
-  const employee = {
+  const employee: Employee = {
     employeeName: "Taylor",
     phone: "555-5555",
-    shift: "Monday",
+    shift: ShiftDay.Monday,
   };
   const uid = "uid1";
   const goTo = (url: string) => {
