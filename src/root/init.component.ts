@@ -4,7 +4,8 @@ import {
   StateService,
 } from "@uirouter/angularjs";
 import angular, { IComponentOptions } from "angular";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const config: IComponentOptions = {
   controller: class InitComponentController {

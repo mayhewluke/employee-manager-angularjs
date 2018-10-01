@@ -1,6 +1,8 @@
 import { default as uiRouterModule, StateService } from "@uirouter/angularjs";
 import angular, { IPromise, IQService } from "angular";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 import { Employee } from "common/employeeTypes";
 

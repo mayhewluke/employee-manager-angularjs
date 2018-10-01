@@ -1,9 +1,7 @@
-jest.mock("firebase");
-
 import { StateService } from "@uirouter/angularjs";
 import angular, { IQService, IScope } from "angular";
 import "angular-mocks";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { Employee, ShiftDay } from "common/employeeTypes";
 
@@ -36,7 +34,9 @@ describe("employee service", () => {
     const mockOnce = jest.fn();
     let user: { uid: string };
     beforeEach(() => {
-      (firebase.database as any).mockImplementation(() => ({ ref: mockRef }));
+      jest
+        .spyOn(firebase, "database")
+        .mockImplementation(() => ({ ref: mockRef }));
       mockRef.mockImplementation(() => ({ once: mockOnce }));
       mockOnce.mockImplementation(() => $q.resolve());
       user = { uid: "userUid" };
@@ -44,7 +44,7 @@ describe("employee service", () => {
 
     describe("when not logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: null,
         }));
       });
@@ -66,7 +66,7 @@ describe("employee service", () => {
 
     describe("when logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: user,
         }));
       });
@@ -158,13 +158,15 @@ describe("employee service", () => {
     const mockPush = jest.fn();
     const user = { uid: "userUid" };
     beforeEach(() => {
-      (firebase.database as any).mockImplementation(() => ({ ref: mockRef }));
+      jest
+        .spyOn(firebase, "database")
+        .mockImplementation(() => ({ ref: mockRef }));
       mockRef.mockImplementation(() => ({ push: mockPush }));
     });
 
     describe("when not logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: null,
         }));
       });
@@ -193,7 +195,7 @@ describe("employee service", () => {
 
     describe("when logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: user,
         }));
       });
@@ -245,13 +247,15 @@ describe("employee service", () => {
     const user = { uid: "userUid" };
     const doSave = () => service.save(uid, employee);
     beforeEach(() => {
-      (firebase.database as any).mockImplementation(() => ({ ref: mockRef }));
+      jest
+        .spyOn(firebase, "database")
+        .mockImplementation(() => ({ ref: mockRef }));
       mockRef.mockImplementation(() => ({ set: mockSet }));
     });
 
     describe("when not logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: null,
         }));
       });
@@ -280,7 +284,7 @@ describe("employee service", () => {
 
     describe("when logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: user,
         }));
       });
@@ -327,13 +331,15 @@ describe("employee service", () => {
     const user = { uid: "userUid" };
     const doRemove = () => service.remove(uid);
     beforeEach(() => {
-      (firebase.database as any).mockImplementation(() => ({ ref: mockRef }));
+      jest
+        .spyOn(firebase, "database")
+        .mockImplementation(() => ({ ref: mockRef }));
       mockRef.mockImplementation(() => ({ remove: mockRemove }));
     });
 
     describe("when not logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: null,
         }));
       });
@@ -362,7 +368,7 @@ describe("employee service", () => {
 
     describe("when logged in", () => {
       beforeEach(() => {
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           currentUser: user,
         }));
       });

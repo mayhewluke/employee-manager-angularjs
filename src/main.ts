@@ -1,5 +1,5 @@
 import angular from "angular";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { rootModule } from "root";
 import firebaseConfigJson from "secrets/firebaseConfig.json";

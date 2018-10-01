@@ -1,9 +1,7 @@
-jest.mock("firebase");
-
 import { StateService } from "@uirouter/angularjs";
 import angular, { ICompileService, ILocationService, IQService } from "angular";
 import "angular-mocks";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { Employee, ShiftDay } from "common/employeeTypes";
 import { authModule } from "components/auth";
@@ -86,7 +84,9 @@ describe("employee edit form", () => {
 
   describe("when the save button is clicked", () => {
     beforeEach(() => {
-      (firebase.auth as any).mockImplementation(() => ({ currentUser: user }));
+      jest
+        .spyOn(firebase, "auth")
+        .mockImplementation(() => ({ currentUser: user }));
       jest.spyOn(service, "save").mockImplementation(() => $q.resolve());
       jest.spyOn(state, "go").mockImplementation(() => null);
       goTo(`employee/${uid}`);
@@ -160,7 +160,9 @@ describe("employee edit form", () => {
 
   describe("when the delete button is clicked", () => {
     beforeEach(() => {
-      (firebase.auth as any).mockImplementation(() => ({ currentUser: user }));
+      jest
+        .spyOn(firebase, "auth")
+        .mockImplementation(() => ({ currentUser: user }));
       jest.spyOn(service, "remove").mockImplementation(() => $q.resolve());
       jest.spyOn(state, "go").mockImplementation(() => null);
       goTo(`employee/${uid}`);

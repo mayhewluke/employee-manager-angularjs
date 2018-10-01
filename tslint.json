@@ -10,6 +10,9 @@
   "jsRules": {},
   "rules": {
     "prettier": [true, { "trailingComma": "all"}],
+    "import-name": [true, {
+      "app": "firebase"
+    }],
     "interface-name": [false],
     "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
     "jsx-boolean-value": false,

@@ -1,5 +1,3 @@
-jest.mock("firebase");
-
 import { StateService } from "@uirouter/angularjs";
 import angular from "angular";
 import "angular-mocks";

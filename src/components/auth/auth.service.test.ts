@@ -1,8 +1,6 @@
-jest.mock("firebase");
-
 import angular, { IScope } from "angular";
 import "angular-mocks";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { AuthService, authServiceModule } from "./auth.service";
 
@@ -29,7 +27,7 @@ describe("auth service", () => {
     beforeEach(
       angular.mock.inject(($rootScope: IScope) => {
         scope = $rootScope;
-        (firebase.auth as any).mockImplementation(() => authReturn);
+        jest.spyOn(firebase, "auth").mockImplementation(() => authReturn);
       }),
     );
 
@@ -100,13 +98,17 @@ describe("auth service", () => {
 
   describe("isAuthenticated", () => {
     it("returns true when logged in", () => {
-      (firebase.auth as any).mockImplementation(() => ({ currentUser: {} }));
+      jest
+        .spyOn(firebase, "auth")
+        .mockImplementation(() => ({ currentUser: {} }));
 
       expect(auth.isAuthenticated()).toBe(true);
     });
 
     it("returns true when not logged in", () => {
-      (firebase.auth as any).mockImplementation(() => ({ currentUser: null }));
+      jest
+        .spyOn(firebase, "auth")
+        .mockImplementation(() => ({ currentUser: null }));
 
       expect(auth.isAuthenticated()).toBe(false);
     });

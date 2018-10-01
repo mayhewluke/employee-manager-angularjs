@@ -1,6 +1,7 @@
 import angular from "angular";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export class AuthService {
   constructor(private $q: ng.IQService) {}

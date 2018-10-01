@@ -1,9 +1,7 @@
-jest.mock("firebase");
-
 import { StateService } from "@uirouter/angularjs";
 import angular, { ICompileService, IScope } from "angular";
 import "angular-mocks";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import initComponent from "./init.component";
 
@@ -19,7 +17,7 @@ describe("initComponent", () => {
         scope = $rootScope.$new();
         state = $state;
         render = () => $compile("<init></init>")(scope);
-        (firebase.auth as any).mockImplementation(() => ({
+        jest.spyOn(firebase, "auth").mockImplementation(() => ({
           onAuthStateChanged: onChange,
         }));
         onChange.mockImplementation(() => jest.fn());
