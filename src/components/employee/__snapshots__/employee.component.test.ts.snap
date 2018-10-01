@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`employee view component when logged in displays the employee 1`] = `
+"
+  <p class=\\"ng-binding\\">Name: Taylor</p>
+  <p class=\\"ng-binding\\">Phone: 555-5555</p>
+  <p class=\\"ng-binding\\">Shift: Monday</p>
+  "
+`;
